@@ -71,7 +71,6 @@ jobs:
       - name: Compile PSX MMCE build
         run: |
           make release COMMIT_HASH=${GITHUB_SHA::7} BINDIR=PSX_MMCE/ PSX=1 MMCE=1 ${{ env.DEBUG }} PRINTF=${{ github.event.inputs.name }}
-
       - name: list
         run: |
           git ls-files -i --exclude-standard -c
