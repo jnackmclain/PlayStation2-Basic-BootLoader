@@ -291,8 +291,17 @@ int main(int argc, char *argv[])
 
     // Stores last key during DELAY msec
     scr_clear();
-
-    DPRINTF("Please wait!\n");
+    if (GLOBCFG.LOGO_DISP > 0) {
+        scr_printf("\n\n\n\n\tModel:\t\t%s\n"
+                   "\tPlayStation Driver:\t%s\n"
+                   "\tDVD Player:\t%s\n"
+                   "\tConfig source:\t%s\n",
+                   ModelNameGet(),
+                   PS1DRVGetVersion(),
+                   DVDPlayerGetVersion(),
+                   SOURCES[config_source]);
+    PrintTemperature();
+    scr_printf("Please wait!");
     TimerInit();
     tstart = Timer();
     while (Timer() <= (tstart + GLOBCFG.DELAY)) {
