@@ -300,7 +300,10 @@ int main(int argc, char *argv[])
                    PS1DRVGetVersion(),
                    DVDPlayerGetVersion(),
                    SOURCES[config_source]);
-    PrintTemperature();
+#ifndef NO_TEMP_DISP
+        PrintTemperature();
+#endif
+    }
     scr_printf("Please wait!");
     TimerInit();
     tstart = Timer();
