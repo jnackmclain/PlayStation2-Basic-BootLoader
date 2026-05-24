@@ -289,60 +289,10 @@ int main(int argc, char *argv[])
         sleep(1);
     }
 
-    int R = 0x80, G = 0x80, B = 0x80;
-    if (GLOBCFG.OSDHISTORY_READ && (GLOBCFG.LOGO_DISP > 1)) {
-        j = 1;
-        // Try to load the history file from memory card slot 1
-        if (LoadHistoryFile(0) < 0) { // Try memory card slot 2
-            if (LoadHistoryFile(1) < 0) {
-                DPRINTF("no history files found\n\n");
-                j = 0;
-            }
-        }
-
-        if (j) {
-            for (j = 0; j < MAX_HISTORY_ENTRIES; j++) {
-                switch (j % 3) {
-                    case 0:
-                        R += (HistoryEntries[j].LaunchCount * 2);
-                        break;
-                    case 1:
-                        G += (HistoryEntries[j].LaunchCount * 2);
-                        break;
-                    case 2:
-                        B += (HistoryEntries[j].LaunchCount * 2);
-                        break;
-                    default:
-                        B += (HistoryEntries[j].LaunchCount * 2);
-                }
-            }
-            scr_setfontcolor(RBG2INT(B, G, R));
-            DPRINTF("New banner color is: #%8x\n", RBG2INT(B, G, R));
-        } else {
-            DPRINTF("can't find any osd history for banner color\n");
-        }
-    }
     // Stores last key during DELAY msec
     scr_clear();
-    if (GLOBCFG.LOGO_DISP > 1)
-        scr_printf("\n\n\n\n%s", BANNER);
-    scr_setfontcolor(0xffffff);
-    if (GLOBCFG.LOGO_DISP > 1)
-        scr_printf(BANNER_FOOTER);
-    if (GLOBCFG.LOGO_DISP > 0) {
-        scr_printf("\n\n\tModel:\t\t%s\n"
-                   "\tPlayStation Driver:\t%s\n"
-                   "\tDVD Player:\t%s\n"
-                   "\tConfig source:\t%s\n",
-                   ModelNameGet(),
-                   PS1DRVGetVersion(),
-                   DVDPlayerGetVersion(),
-                   SOURCES[config_source]);
-#ifndef NO_TEMP_DISP
-        PrintTemperature();
-#endif
-    }
-    DPRINTF("Timer starts!\n");
+
+    DPRINTF("Please wait!\n");
     TimerInit();
     tstart = Timer();
     while (Timer() <= (tstart + GLOBCFG.DELAY)) {
